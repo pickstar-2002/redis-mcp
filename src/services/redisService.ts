@@ -117,9 +117,11 @@ export class RedisService {
       if (!this.client) throw new Error('Redis client not initialized');
       
       if (expireSeconds !== undefined) {
-        return await this.client.set(key, value, { EX: expireSeconds });
+        const result = await this.client.set(key, value, { EX: expireSeconds });
+        return result || 'OK';
       } else {
-        return await this.client.set(key, value);
+        const result = await this.client.set(key, value);
+        return result || 'OK';
       }
     });
   }
