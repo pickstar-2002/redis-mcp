@@ -1,11 +1,14 @@
 {
   "name": "@pickstar-2002/redis-mcp",
-  "version": "1.0.3",
+  "version": "1.0.4",
   "description": "Redis 基础操作与应用 MCP 工具",
   "main": "dist/index.js",
   "types": "dist/index.d.ts",
   "bin": {
     "redis-mcp": "dist/index.js"
+  },
+  "publishConfig": {
+    "access": "public"
   },
   "scripts": {
     "build": "tsc",

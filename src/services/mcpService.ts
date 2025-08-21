@@ -31,7 +31,7 @@ export class RedisMCPService {
     this.server = new Server(
       {
         name: 'redis-mcp',
-        version: '1.0.1',
+        version: '1.0.3',
       },
       {
         capabilities: {

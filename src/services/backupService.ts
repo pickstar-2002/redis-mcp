@@ -1,7 +1,7 @@
 import fs from 'fs';
 import path from 'path';
-import { RedisService } from './redisService';
-import { RedisBackupOptions, RedisOperationResult, RedisRestoreOptions } from '../types';
+import { RedisService } from './redisService.js';
+import { RedisBackupOptions, RedisOperationResult, RedisRestoreOptions } from '../types/index.js';
 
 /**
  * Redis 备份与恢复服务

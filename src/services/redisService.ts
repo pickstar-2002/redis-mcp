@@ -6,7 +6,7 @@ import {
   RedisHashField,
   RedisSortedSetMember,
   RedisKeyInfo
-} from '../types';
+} from '../types/index.js';
 
 /**
  * Redis 服务类 - 提供 Redis 基础操作
@@ -308,30 +308,58 @@ export class RedisService {
    * 左侧弹出列表
    */
   async lpop(key: string, count?: number): Promise<RedisOperationResult<string | string[] | null>> {
-    return this.executeCommand(async () => {
+    try {
+      await this.ensureConnection();
       if (!this.client) throw new Error('Redis client not initialized');
       
-      if (count !== undefined && count > 1) {
-        return await this.client.lPopCount(key, count);
+      if (count !== undefined && count > 0) {
+        // 兼容所有Redis版本：逐个弹出元素
+        const results: string[] = [];
+        for (let i = 0; i < count; i++) {
+          const item = await this.client.lPop(key);
+          if (item === null) break;
+          results.push(item);
+        }
+        return { success: true, data: results.length === 0 ? null : results };
       } else {
-        return await this.client.lPop(key);
+        const result = await this.client.lPop(key);
+        return { success: true, data: result };
       }
-    });
+    } catch (error) {
+      return { 
+        success: false, 
+        error: `Redis operation failed: ${error instanceof Error ? error.message : String(error)}` 
+      };
+    }
   }
 
   /**
    * 右侧弹出列表
    */
   async rpop(key: string, count?: number): Promise<RedisOperationResult<string | string[] | null>> {
-    return this.executeCommand(async () => {
+    try {
+      await this.ensureConnection();
       if (!this.client) throw new Error('Redis client not initialized');
       
-      if (count !== undefined && count > 1) {
-        return await this.client.rPopCount(key, count);
+      if (count !== undefined && count > 0) {
+        // 兼容所有Redis版本：逐个弹出元素
+        const results: string[] = [];
+        for (let i = 0; i < count; i++) {
+          const item = await this.client.rPop(key);
+          if (item === null) break;
+          results.push(item);
+        }
+        return { success: true, data: results.length === 0 ? null : results };
       } else {
-        return await this.client.rPop(key);
+        const result = await this.client.rPop(key);
+        return { success: true, data: result };
       }
-    });
+    } catch (error) {
+      return { 
+        success: false, 
+        error: `Redis operation failed: ${error instanceof Error ? error.message : String(error)}` 
+      };
+    }
   }
 
   /**
