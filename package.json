@@ -1,6 +1,6 @@
 {
   "name": "@pickstar-2002/redis-mcp",
-  "version": "1.0.1",
+  "version": "1.0.2",
   "description": "Redis 基础操作与应用 MCP 工具",
   "main": "dist/index.js",
   "types": "dist/index.d.ts",
