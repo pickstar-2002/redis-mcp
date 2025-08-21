@@ -51,6 +51,24 @@ pnpm add @pickstar-2002/redis-mcp@latest
 }
 ```
 
+**带Redis连接参数的配置：**
+
+```json
+{
+  "mcpServers": {
+    "redis-mcp": {
+      "command": "npx",
+      "args": [
+        "@pickstar-2002/redis-mcp@latest",
+        "--host", "localhost",
+        "--port", "6379",
+        "--password", "your-password"
+      ]
+    }
+  }
+}
+```
+
 #### 🤖 Claude Desktop 配置
 
 在 `claude_desktop_config.json` 中添加：
@@ -61,6 +79,26 @@ pnpm add @pickstar-2002/redis-mcp@latest
     "redis-mcp": {
       "command": "npx",
       "args": ["@pickstar-2002/redis-mcp@latest"]
+    }
+  }
+}
+```
+
+**带Redis连接参数的配置：**
+
+```json
+{
+  "mcpServers": {
+    "redis-mcp": {
+      "command": "npx",
+      "args": [
+        "@pickstar-2002/redis-mcp@latest",
+        "--host", "redis.example.com",
+        "--port", "6379",
+        "--username", "redis-user",
+        "--password", "redis-password",
+        "--db", "0"
+      ]
     }
   }
 }
@@ -79,6 +117,22 @@ pnpm add @pickstar-2002/redis-mcp@latest
 }
 ```
 
+**带Redis连接参数的配置：**
+
+```json
+{
+  "redis-mcp": {
+    "command": "npx",
+    "args": [
+      "@pickstar-2002/redis-mcp@latest",
+      "--host", "localhost",
+      "--port", "6379",
+      "--tls"
+    ]
+  }
+}
+```
+
 #### 🔧 CodeBuddy 配置
 
 在 CodeBuddy 的 MCP 设置中添加：
@@ -91,6 +145,35 @@ pnpm add @pickstar-2002/redis-mcp@latest
   }
 }
 ```
+
+**带Redis连接参数的配置：**
+
+```json
+{
+  "redis-mcp": {
+    "command": "npx",
+    "args": [
+      "@pickstar-2002/redis-mcp@latest",
+      "--host", "127.0.0.1",
+      "--port", "6379",
+      "--password", "mypassword"
+    ]
+  }
+}
+```
+
+### 🔧 支持的命令行参数
+
+| 参数 | 描述 | 示例 |
+|------|------|------|
+| `--host` | Redis服务器地址 | `--host localhost` |
+| `--port` | Redis服务器端口 | `--port 6379` |
+| `--username` | Redis用户名 | `--username myuser` |
+| `--password` | Redis密码 | `--password mypass` |
+| `--db` | Redis数据库索引 | `--db 0` |
+| `--tls` | 启用TLS连接 | `--tls` |
+
+**注意：** 如果在配置中指定了连接参数，这些参数将作为默认值。在使用 `connect_redis` 工具时，仍可以覆盖这些默认值。
 
 ### 💡 基本使用
 

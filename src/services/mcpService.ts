@@ -24,12 +24,14 @@ export class RedisMCPService {
   private server: Server;
   private redisService: RedisService | null = null;
   private backupService: RedisBackupService | null = null;
+  private defaultConfig: Partial<RedisConnectionConfig>;
 
-  constructor() {
+  constructor(defaultConfig: Partial<RedisConnectionConfig> = {}) {
+    this.defaultConfig = defaultConfig;
     this.server = new Server(
       {
         name: 'redis-mcp',
-        version: '1.0.0',
+        version: '1.0.1',
       },
       {
         capabilities: {
@@ -760,12 +762,12 @@ export class RedisMCPService {
    */
   private async handleConnectRedis(args: any) {
     const config: RedisConnectionConfig = {
-      host: args.host,
-      port: args.port,
-      username: args.username,
-      password: args.password,
-      db: args.db,
-      tls: args.tls
+      host: args.host || this.defaultConfig.host || 'localhost',
+      port: args.port || this.defaultConfig.port || 6379,
+      username: args.username || this.defaultConfig.username,
+      password: args.password || this.defaultConfig.password,
+      db: args.db || this.defaultConfig.db || 0,
+      tls: args.tls || this.defaultConfig.tls || false
     };
     
     this.redisService = new RedisService(config);

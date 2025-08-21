@@ -1,12 +1,57 @@
 import { RedisMCPService } from './services/mcpService';
+import { RedisConnectionConfig } from './types';
+
+/**
+ * 解析命令行参数
+ */
+function parseArgs(): Partial<RedisConnectionConfig> {
+  const args = process.argv.slice(2);
+  const config: Partial<RedisConnectionConfig> = {};
+  
+  for (let i = 0; i < args.length; i++) {
+    const arg = args[i];
+    const nextArg = args[i + 1];
+    
+    switch (arg) {
+      case '--host':
+        if (nextArg) config.host = nextArg;
+        i++;
+        break;
+      case '--port':
+        if (nextArg) config.port = parseInt(nextArg, 10);
+        i++;
+        break;
+      case '--username':
+        if (nextArg) config.username = nextArg;
+        i++;
+        break;
+      case '--password':
+        if (nextArg) config.password = nextArg;
+        i++;
+        break;
+      case '--db':
+        if (nextArg) config.db = parseInt(nextArg, 10);
+        i++;
+        break;
+      case '--tls':
+        config.tls = true;
+        break;
+    }
+  }
+  
+  return config;
+}
 
 /**
  * Redis MCP 主入口
  */
 async function main() {
   try {
+    // 解析命令行参数
+    const defaultConfig = parseArgs();
+    
     // 创建 Redis MCP 服务
-    const redisMCP = new RedisMCPService();
+    const redisMCP = new RedisMCPService(defaultConfig);
     
     // 启动服务
     await redisMCP.start();
@@ -23,6 +68,9 @@ async function main() {
     process.on('SIGTERM', handleExit);
     
     console.log('Redis MCP Server is running');
+    if (defaultConfig.host || defaultConfig.port) {
+      console.log(`Default Redis connection: ${defaultConfig.host || 'localhost'}:${defaultConfig.port || 6379}`);
+    }
     console.log('Press Ctrl+C to stop the server');
   } catch (error) {
     console.error('Failed to start Redis MCP Server:', error);
