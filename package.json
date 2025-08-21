@@ -1,0 +1,50 @@
+{
+  "name": "@pickstar-2002/redis-mcp",
+  "version": "1.0.0",
+  "description": "Redis 基础操作与应用 MCP 工具",
+  "main": "dist/index.js",
+  "types": "dist/index.d.ts",
+  "bin": {
+    "redis-mcp": "dist/index.js"
+  },
+  "scripts": {
+    "build": "tsc",
+    "start": "node dist/index.js",
+    "dev": "ts-node src/index.ts",
+    "prepublishOnly": "npm run build"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/pickstar-2002/redis-mcp.git"
+  },
+  "keywords": [
+    "redis",
+    "mcp",
+    "model-context-protocol",
+    "cache",
+    "database",
+    "ai",
+    "assistant"
+  ],
+  "author": "pickstar-2002",
+  "license": "MIT",
+  "type": "commonjs",
+  "bugs": {
+    "url": "https://github.com/pickstar-2002/redis-mcp/issues"
+  },
+  "homepage": "https://github.com/pickstar-2002/redis-mcp#readme",
+  "dependencies": {
+    "@modelcontextprotocol/sdk": "^1.17.3",
+    "@types/node": "^20.0.0",
+    "redis": "^4.6.13"
+  },
+  "devDependencies": {
+    "ts-node": "^10.9.2",
+    "typescript": "^5.0.0"
+  },
+  "files": [
+    "dist/**/*",
+    "README.md",
+    "LICENSE"
+  ]
+}
