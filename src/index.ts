@@ -1,5 +1,7 @@
-import { RedisMCPService } from './services/mcpService';
-import { RedisConnectionConfig } from './types';
+#!/usr/bin/env node
+
+import { RedisMCPService } from './services/mcpService.js';
+import { RedisConnectionConfig } from './types/index.js';
 
 /**
  * 解析命令行参数
@@ -58,7 +60,7 @@ async function main() {
     
     // 处理进程退出
     const handleExit = async () => {
-      console.log('Shutting down Redis MCP Server...');
+      console.error('Shutting down Redis MCP Server...');
       await redisMCP.stop();
       process.exit(0);
     };
@@ -67,11 +69,11 @@ async function main() {
     process.on('SIGINT', handleExit);
     process.on('SIGTERM', handleExit);
     
-    console.log('Redis MCP Server is running');
+    // 输出启动信息到 stderr（避免干扰 MCP 通信）
+    console.error('Redis MCP Server is running');
     if (defaultConfig.host || defaultConfig.port) {
-      console.log(`Default Redis connection: ${defaultConfig.host || 'localhost'}:${defaultConfig.port || 6379}`);
+      console.error(`Default Redis connection: ${defaultConfig.host || 'localhost'}:${defaultConfig.port || 6379}`);
     }
-    console.log('Press Ctrl+C to stop the server');
   } catch (error) {
     console.error('Failed to start Redis MCP Server:', error);
     process.exit(1);
