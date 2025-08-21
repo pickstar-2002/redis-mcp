@@ -8,11 +8,8 @@ async function main() {
     // 创建 Redis MCP 服务
     const redisMCP = new RedisMCPService();
     
-    // 获取端口号（默认为 3000）
-    const port = process.env.PORT ? parseInt(process.env.PORT, 10) : 3000;
-    
     // 启动服务
-    await redisMCP.start(port);
+    await redisMCP.start();
     
     // 处理进程退出
     const handleExit = async () => {
@@ -25,7 +22,7 @@ async function main() {
     process.on('SIGINT', handleExit);
     process.on('SIGTERM', handleExit);
     
-    console.log(`Redis MCP Server is running on port ${port}`);
+    console.log('Redis MCP Server is running');
     console.log('Press Ctrl+C to stop the server');
   } catch (error) {
     console.error('Failed to start Redis MCP Server:', error);

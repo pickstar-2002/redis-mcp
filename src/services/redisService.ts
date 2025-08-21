@@ -130,7 +130,8 @@ export class RedisService {
   async get(key: string): Promise<RedisOperationResult<string | null>> {
     return this.executeCommand(async () => {
       if (!this.client) throw new Error('Redis client not initialized');
-      return await this.client.get(key);
+      const result = await this.client.get(key);
+      return result;
     });
   }
 
@@ -239,7 +240,8 @@ export class RedisService {
   async hget(key: string, field: string): Promise<RedisOperationResult<string | null>> {
     return this.executeCommand(async () => {
       if (!this.client) throw new Error('Redis client not initialized');
-      return await this.client.hGet(key, field);
+      const result = await this.client.hGet(key, field);
+      return result || null;
     });
   }
 
@@ -443,7 +445,7 @@ export class RedisService {
     return this.executeCommand(async () => {
       if (!this.client) throw new Error('Redis client not initialized');
       const result = await this.client.expire(key, seconds);
-      return result === 1;
+      return Boolean(result);
     });
   }
 

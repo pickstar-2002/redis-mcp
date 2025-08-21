@@ -4,6 +4,7 @@
 [![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT)
 [![Node.js Version](https://img.shields.io/badge/node-%3E%3D18.0.0-brightgreen.svg)](https://nodejs.org/)
 [![TypeScript](https://img.shields.io/badge/TypeScript-Ready-blue.svg)](https://www.typescriptlang.org/)
+[![Downloads](https://img.shields.io/npm/dm/@pickstar-2002/redis-mcp.svg)](https://www.npmjs.com/package/@pickstar-2002/redis-mcp)
 
 > 🔧 基于 Model Context Protocol (MCP) 的 Redis 操作工具，为 AI 助手提供强大的 Redis 数据库操作能力
 
@@ -21,7 +22,7 @@
 ## 📦 安装
 
 ```bash
-# 使用 npm
+# 使用 npm（推荐使用 @latest 获取最新版本）
 npm install @pickstar-2002/redis-mcp@latest
 
 # 使用 yarn
@@ -35,7 +36,7 @@ pnpm add @pickstar-2002/redis-mcp@latest
 
 ### 在 AI 助手中配置
 
-#### Cursor AI 配置
+#### 🎯 Cursor AI 配置
 
 在 Cursor 的设置中添加 MCP 服务器：
 
@@ -50,7 +51,7 @@ pnpm add @pickstar-2002/redis-mcp@latest
 }
 ```
 
-#### Claude Desktop 配置
+#### 🤖 Claude Desktop 配置
 
 在 `claude_desktop_config.json` 中添加：
 
@@ -65,7 +66,7 @@ pnpm add @pickstar-2002/redis-mcp@latest
 }
 ```
 
-#### WindSurf 配置
+#### 🌊 WindSurf 配置
 
 在 WindSurf 的 MCP 设置中添加：
 
@@ -78,7 +79,20 @@ pnpm add @pickstar-2002/redis-mcp@latest
 }
 ```
 
-### 基本使用
+#### 🔧 CodeBuddy 配置
+
+在 CodeBuddy 的 MCP 设置中添加：
+
+```json
+{
+  "redis-mcp": {
+    "command": "npx",
+    "args": ["@pickstar-2002/redis-mcp@latest"]
+  }
+}
+```
+
+### 💡 基本使用
 
 配置完成后，您可以在 AI 助手中直接使用 Redis 操作：
 
@@ -172,7 +186,7 @@ pnpm add @pickstar-2002/redis-mcp@latest
 
 ## 📚 使用示例
 
-### 缓存系统
+### 🗄️ 缓存系统
 
 ```javascript
 // 连接 Redis
@@ -185,7 +199,7 @@ await stringSet({ key: 'user:1001', value: JSON.stringify(userData), expireSecon
 const cachedData = await stringGet({ key: 'user:1001' });
 ```
 
-### 排行榜系统
+### 🏆 排行榜系统
 
 ```javascript
 // 添加用户分数
@@ -206,7 +220,7 @@ const topPlayers = await zsetRange({
 });
 ```
 
-### 消息队列
+### 📨 消息队列
 
 ```javascript
 // 发送消息
@@ -214,6 +228,21 @@ await listRpush({ key: 'message_queue', values: ['message1', 'message2'] });
 
 // 接收消息
 const message = await listLpop({ key: 'message_queue' });
+```
+
+### 🔍 批量操作
+
+```javascript
+// 批量设置键值
+await stringMset({ 
+  pairs: [
+    { key: 'key1', value: 'value1' },
+    { key: 'key2', value: 'value2' }
+  ]
+});
+
+// 批量获取键值
+const values = await stringMget({ keys: ['key1', 'key2'] });
 ```
 
 ## 🔧 开发
@@ -230,6 +259,12 @@ npm run build
 npm run dev
 ```
 
+### 启动服务
+
+```bash
+npm start
+```
+
 ## 🤝 贡献
 
 欢迎提交 Issue 和 Pull Request！
@@ -243,6 +278,10 @@ npm run dev
 ## 📄 许可证
 
 本项目采用 MIT 许可证 - 查看 [LICENSE](LICENSE) 文件了解详情。
+
+## 🌟 Star History
+
+[![Star History Chart](https://api.star-history.com/svg?repos=pickstar-2002/redis-mcp&type=Date)](https://star-history.com/#pickstar-2002/redis-mcp&Date)
 
 ## 👨‍💻 作者
 

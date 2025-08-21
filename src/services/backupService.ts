@@ -162,7 +162,7 @@ export class RedisBackupService {
 
       // 如果需要，先清空数据库
       if (flushBeforeRestore) {
-        const flushResult = await this.redisService.flushDb();
+        const flushResult = await this.redisService.flushdb();
         if (!flushResult.success) {
           return {
             success: false,
